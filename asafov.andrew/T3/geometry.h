@@ -6,7 +6,7 @@ namespace asafov
   struct Point
   {
     int x, y;
-    bool operator==(const Point& a, const Point& b);
+    bool operator==(const Point& other) const;
   };
 
   struct Polygon
@@ -15,6 +15,7 @@ namespace asafov
   };
 
   double computeArea(const Polygon& poly);
+  bool operator==(const Point& a, const Point& b);
   bool arePolygonsSame(const Polygon& a, const Polygon& b);
   bool doPolygonsIntersect(const Polygon& a, const Polygon& b);
   bool edgesIntersect(const Point& a1, const Point& a2, const Point& b1, const Point& b2);

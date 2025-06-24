@@ -5,9 +5,9 @@
 
 namespace asafov
 {
-  bool operator==(const Point& a, const Point& b)
+  bool Point::operator==(const Point& other) const
   {
-    return (a.x == b.x) && (a.y == b.y);
+    return x == other.x && y == other.y;
   }
 
   double computeArea(const Polygon& poly)
