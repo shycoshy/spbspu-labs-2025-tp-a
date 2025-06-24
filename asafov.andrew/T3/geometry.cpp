@@ -20,10 +20,8 @@ double computeArea(const Polygon& poly) {
         std::plus<>(),
         area_op
     );
-    
-    // Добавляем последний отрезок (последняя точка → первая точка)
     sum += area_op(pts.back(), pts.front());
-    
+
     return std::abs(sum) / 2.0;
 }
 
@@ -32,15 +30,15 @@ bool edgesIntersect(const Point& a1, const Point& a2, const Point& b1, const Poi
     Point r = {a2.x-a1.x, a2.y-a1.y};
     Point s = {b2.x-b1.x, b2.y-b1.y};
     Point qp = {b1.x-a1.x, b1.y-a1.y};
-    
+
     double rxs = cross(r, s);
     double qpxr = cross(qp, r);
-    
+
     if (std::abs(rxs) < 1e-10) return false;
-    
+
     double t = cross(qp, s)/rxs;
     double u = qpxr/rxs;
-    
+
     return (t >= 0 && t <= 1) && (u >= 0 && u <= 1);
 }
 
@@ -61,11 +59,11 @@ bool doPolygonsIntersect(const Polygon& a, const Polygon& b) {
 
 bool arePolygonsSame(const Polygon& a, const Polygon& b) {
     if (a.points.size() != b.points.size()) return false;
-    
+
     auto points_equal = [](const Point& p1, const Point& p2) {
         return p1 == p2;
     };
-    
+
     return std::search(
         a.points.begin(), a.points.end(),
         b.points.begin(), b.points.end(),
