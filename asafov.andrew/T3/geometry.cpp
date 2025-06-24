@@ -9,6 +9,10 @@ bool Point::operator==(const Point& other) const {
     return x == other.x && y == other.y;
 }
 
+bool Point::operator!=(const Point& other) const {
+    return !(*this == other);
+}
+
 double computeArea(const Polygon& poly) {
     if (poly.points.size() < 3) return 0.0;
 
