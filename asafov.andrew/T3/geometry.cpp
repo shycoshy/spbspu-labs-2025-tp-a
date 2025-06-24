@@ -25,8 +25,8 @@ double computeArea(const Polygon& poly) {
 }
 
 bool edgesIntersect(const Point& a1, const Point& a2, const Point& b1, const Point& b2) {
-    auto cross = [](const Point& p, const Point& q) { 
-        return p.x * q.y - p.y * q.x; 
+    auto cross = [](const Point& p, const Point& q) {
+        return p.x * q.y - p.y * q.x;
     };
 
     Point r = {a2.x - a1.x, a2.y - a1.y};
