@@ -19,14 +19,14 @@ namespace asafov
 
     double sum = 0.0;
     const auto& pts = poly.points;
-    
+
     for (size_t i = 0; i < pts.size(); ++i)
     {
       const Point& p1 = pts[i];
       const Point& p2 = pts[(i + 1) % pts.size()];
       sum += (p1.x * p2.y) - (p2.x * p1.y);
     }
-    
+
     return std::abs(sum) / 2.0;
   }
 
