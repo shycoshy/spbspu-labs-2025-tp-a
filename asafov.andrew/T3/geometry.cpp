@@ -17,21 +17,16 @@ namespace asafov
       return 0.0;
     }
 
-    auto area_op = [](const Point& p1, const Point& p2)
-    {
-      return (p1.x * p2.y) - (p2.x * p1.y);
-    };
-
+    double sum = 0.0;
     const auto& pts = poly.points;
-    double sum = std::transform_reduce(
-        pts.begin(), pts.end() - 1,
-        pts.begin() + 1,
-        0.0,
-        std::plus<>(),
-        area_op
-    );
-
-    sum += area_op(pts.back(), pts.front());
+    
+    for (size_t i = 0; i < pts.size(); ++i)
+    {
+      const Point& p1 = pts[i];
+      const Point& p2 = pts[(i + 1) % pts.size()];
+      sum += (p1.x * p2.y) - (p2.x * p1.y);
+    }
+    
     return std::abs(sum) / 2.0;
   }
 
