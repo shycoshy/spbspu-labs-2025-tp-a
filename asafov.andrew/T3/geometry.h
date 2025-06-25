@@ -1,6 +1,7 @@
 #ifndef GEOMETRY_H
 #define GEOMETRY_H
 #include <vector>
+
 namespace asafov
 {
   struct Point
