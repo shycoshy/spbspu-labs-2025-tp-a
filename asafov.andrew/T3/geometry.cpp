@@ -49,7 +49,6 @@ namespace asafov
       sum += (p1.x * p2.y) - (p2.x * p1.y);
     }
 
-    double area = std::abs(sum) / 2.0;
     return roundArea(std::abs(sum) / 2.0);
   }
 
