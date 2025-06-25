@@ -4,6 +4,24 @@
 #include <iomanip>
 #include <stdexcept>
 
+namespace
+{
+  double roundArea(double area)
+  {
+    double intPart;
+    double frac = modf(area, &intPart);
+    if (frac >= 0.5)
+    {
+      return intPart + 1.0;
+    }
+    if (frac <= -0.5)
+    {
+      return intPart - 1.0;
+    }
+    return intPart;
+  }
+}
+
 namespace asafov
 {
   bool Point::operator==(const Point& other) const
@@ -31,7 +49,7 @@ namespace asafov
     }
 
     double area = std::abs(sum) / 2.0;
-    return (area < 0.0) ? ceil(area - 0.5) : floor(area + 0.5);
+    return roundArea(std::abs(sum) / 2.0);
   }
 
   bool edgesIntersect(const Point& a1, const Point& a2, const Point& b1, const Point& b2)
