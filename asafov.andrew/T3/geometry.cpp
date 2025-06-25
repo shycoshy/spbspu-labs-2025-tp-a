@@ -30,7 +30,8 @@ namespace asafov
       sum += (p1.x * p2.y) - (p2.x * p1.y);
     }
 
-    return std::round(std::abs(sum) * 5.0) / 10.0;
+    double area = std::abs(sum) / 2.0;
+    return (area < 0.0) ? ceil(area - 0.5) : floor(area + 0.5);
   }
 
   bool edgesIntersect(const Point& a1, const Point& a2, const Point& b1, const Point& b2)
