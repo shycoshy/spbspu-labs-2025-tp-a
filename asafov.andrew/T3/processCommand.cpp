@@ -1,7 +1,5 @@
 #include "functions.h"
 #include "geometry.h"
-#include <string>
-#include <algorithm>
 #include <iomanip>
 #include <stdexcept>
 #include <iostream>
@@ -10,17 +8,17 @@ namespace asafov
 {
   void processCommand(const std::vector< Polygon >& polygons, const std::string& cmd)
   {
-    auto printArea = [](double area)
+    auto printArea = [](double area) ->void
     {
       std::cout << std::fixed << std::setprecision(1) << area << '\n';
     };
 
-    auto printCount = [](size_t count)
+    auto printCount = [](size_t count) ->void
     {
       std::cout << count << '\n';
     };
 
-    auto isValidPolygon = [](const Polygon& poly)
+    auto isValidPolygon = [](const Polygon& poly) ->bool
     {
       return poly.points.size() >= 3;
     };
@@ -31,26 +29,47 @@ namespace asafov
       {
         if (polygons.empty())
         {
-          throw std::invalid_argument("No polygons for MEAN");
+          throw std::invalid_argument("No polygons");
         }
         double total = 0.0;
+        size_t valid_count = 0;
         for (const auto& poly: polygons)
         {
-          total += computeArea(poly);
+          if (isValidPolygon(poly))
+          {
+            total += computeArea(poly);
+            valid_count++;
+          }
         }
-        printArea(total / polygons.size());
+        if (valid_count == 0)
+        {
+          throw std::invalid_argument("No valid polygons");
+        }
+        printArea(total / static_cast< double >(valid_count));
       }
       else if (cmd == "MAX AREA")
       {
         if (polygons.empty())
         {
-          throw std::invalid_argument("No polygons for MAX");
+          throw std::invalid_argument("No polygons");
         }
-        double max_area = computeArea(polygons[0]);
+        bool found = false;
+        double max_area = 0;
         for (const auto& poly: polygons)
         {
-          double area = computeArea(poly);
-          if (area > max_area) max_area = area;
+          if (isValidPolygon(poly))
+          {
+            double area = computeArea(poly);
+            if (!found || area > max_area)
+            {
+              max_area = area;
+              found = true;
+            }
+          }
+        }
+        if (!found)
+        {
+          throw std::invalid_argument("No valid polygons");
         }
         printArea(max_area);
       }
@@ -58,15 +77,24 @@ namespace asafov
       {
         if (polygons.empty())
         {
-          throw std::invalid_argument("No polygons for MAX");
+          throw std::invalid_argument("No polygons");
         }
-        size_t max_vert = polygons[0].points.size();
+        bool found = false;
+        size_t max_vert = 0;
         for (const auto& poly: polygons)
         {
-          if (poly.points.size() > max_vert)
+          if (isValidPolygon(poly))
           {
-            max_vert = poly.points.size();
+            if (!found || poly.points.size() > max_vert)
+            {
+              max_vert = poly.points.size();
+              found = true;
+            }
           }
+        }
+        if (!found)
+        {
+          throw std::invalid_argument("No valid polygons");
         }
         printCount(max_vert);
       }
@@ -74,13 +102,25 @@ namespace asafov
       {
         if (polygons.empty())
         {
-          throw std::invalid_argument("No polygons for MIN");
+          throw std::invalid_argument("No polygons");
         }
-        double min_area = computeArea(polygons[0]);
+        bool found = false;
+        double min_area = 0;
         for (const auto& poly: polygons)
         {
-          double area = computeArea(poly);
-          if (area < min_area) min_area = area;
+          if (isValidPolygon(poly))
+          {
+            double area = computeArea(poly);
+            if (!found || area < min_area)
+            {
+              min_area = area;
+              found = true;
+            }
+          }
+        }
+        if (!found)
+        {
+          throw std::invalid_argument("No valid polygons");
         }
         printArea(min_area);
       }
@@ -88,15 +128,24 @@ namespace asafov
       {
         if (polygons.empty())
         {
-          throw std::invalid_argument("No polygons for MIN");
+          throw std::invalid_argument("No polygons");
         }
-        size_t min_vert = polygons[0].points.size();
+        bool found = false;
+        size_t min_vert = 0;
         for (const auto& poly: polygons)
         {
-          if (poly.points.size() < min_vert)
+          if (isValidPolygon(poly))
           {
-            min_vert = poly.points.size();
+            if (!found || poly.points.size() < min_vert)
+            {
+              min_vert = poly.points.size();
+              found = true;
+            }
           }
+        }
+        if (!found)
+        {
+          throw std::invalid_argument("No valid polygons");
         }
         printCount(min_vert);
       }
@@ -105,7 +154,7 @@ namespace asafov
         double sum = 0.0;
         for (const auto& poly: polygons)
         {
-          if (poly.points.size() % 2 == 0)
+          if (isValidPolygon(poly) && poly.points.size() % 2 == 0)
           {
             sum += computeArea(poly);
           }
@@ -117,7 +166,7 @@ namespace asafov
         double sum = 0.0;
         for (const auto& poly: polygons)
         {
-          if (poly.points.size() % 2 != 0)
+          if (isValidPolygon(poly) && poly.points.size() % 2 != 0)
           {
             sum += computeArea(poly);
           }
@@ -137,7 +186,7 @@ namespace asafov
           double sum = 0.0;
           for (const auto& poly: polygons)
           {
-            if (poly.points.size() == num)
+            if (isValidPolygon(poly) && poly.points.size() == num)
             {
               sum += computeArea(poly);
             }
@@ -166,7 +215,7 @@ namespace asafov
         size_t count = 0;
         for (const auto& poly: polygons)
         {
-          if (poly.points.size() % 2 != 0)
+          if (isValidPolygon(poly) && poly.points.size() % 2 != 0)
           {
             count++;
           }
@@ -186,7 +235,7 @@ namespace asafov
           size_t count = 0;
           for (const auto& poly: polygons)
           {
-            if (poly.points.size() == num)
+            if (isValidPolygon(poly) && poly.points.size() == num)
             {
               count++;
             }
@@ -203,7 +252,7 @@ namespace asafov
         throw std::invalid_argument("Unknown command");
       }
     }
-    catch (const std::exception& e)
+    catch (...)
     {
       std::cout << "<INVALID COMMAND>\n";
     }
