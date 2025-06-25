@@ -20,6 +20,11 @@ namespace asafov
       std::cout << count << '\n';
     };
 
+    auto isValidPolygon = [](const Polygon& poly)
+    {
+      return poly.points.size() >= 3;
+    };
+
     try
     {
       if (cmd == "AREA MEAN")
@@ -149,7 +154,7 @@ namespace asafov
         size_t count = 0;
         for (const auto& poly: polygons)
         {
-          if (poly.points.size() % 2 == 0)
+          if (isValidPolygon(poly) && poly.points.size() % 2 == 0)
           {
             count++;
           }
