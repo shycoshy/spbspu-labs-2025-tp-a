@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <stdexcept>
+#include <cmath>
 
 namespace
 {
