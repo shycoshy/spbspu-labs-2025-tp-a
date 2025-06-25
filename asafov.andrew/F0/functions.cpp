@@ -257,7 +257,8 @@ namespace
         return sum + pair.second;
       });
 
-    std::cout << "Текст '" << name << "' содержит " << total_words << " слов (" << texts[name].word_freq.size() << " уникальных)\n";
+    std::cout << "Текст '" << name << "' содержит " << total_words << " слов";
+    std::cout << "("<< texts[name].word_freq.size() << " уникальных)\n";
   }
 
   void clear_data()
