@@ -73,10 +73,10 @@ namespace
     
     auto& freq = texts[name].word_freq;
     freq.clear();
-    
+
     const std::string& content = texts[name].content;
     std::string current_word;
-    
+
     std::for_each(
       content.begin(),
       content.end(),
@@ -95,12 +95,12 @@ namespace
           }
         }
       });
-    
+
     if (!current_word.empty())
     {
       freq[current_word]++;
     }
-    
+
     last_analysis_end = std::chrono::steady_clock::now();
     std::cout << "Анализ слов для текста '" << name << "' завершен\n";
   }
