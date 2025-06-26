@@ -4,13 +4,16 @@
 #include <stdexcept>
 #include <cctype>
 
-namespace asafov
+namespace
 {
   bool isValidPointChar(char c)
   {
     return isdigit(c) || c == '(' || c == ')' || c == ';' || c == '-' || c == ' ';
   }
+}
 
+namespace asafov
+{
   std::vector<Polygon> readPolygonsFromFile(const std::string& filename)
   {
     std::ifstream file(filename);
@@ -64,7 +67,6 @@ namespace asafov
             throw std::invalid_argument("Expected '('");
           }
           ++pos;
-
 
           int x = 0;
           bool negative = false;
