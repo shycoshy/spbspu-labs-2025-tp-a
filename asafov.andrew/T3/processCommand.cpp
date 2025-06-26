@@ -15,16 +15,17 @@ namespace
 
     for (size_t i = 0; i < poly.points.size(); ++i)
     {
-        for (size_t j = i + 1; j < poly.points.size(); ++j)
+      for (size_t j = i + 1; j < poly.points.size(); ++j)
+      {
+        if (poly.points[i] == poly.points[j])
         {
-          if (poly.points[i] == poly.points[j])
-          {
-            return false;
-          }
+          return false;
         }
+      }
     }
+
     return true;
-  }
+}
 }
 
 namespace asafov
@@ -172,7 +173,7 @@ namespace asafov
         double sum = 0.0;
         for (const auto& poly: polygons)
         {
-          if (isPolygonValid(poly) && poly.points.size() % 2 == 0 && poly.points.size() > 1)
+          if (isPolygonValid(poly) && poly.points.size() % 2 == 0)
           {
             sum += computeArea(poly);
           }
