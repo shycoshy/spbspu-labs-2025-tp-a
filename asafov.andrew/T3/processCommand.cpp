@@ -234,7 +234,6 @@ namespace asafov
         size_t count = 0;
         for (const auto& poly: polygons)
         {
-          std::cout << poly.points.size();
           if (isPolygonValid(poly) && poly.points.size() % 2 != 0)
           {
             count++;

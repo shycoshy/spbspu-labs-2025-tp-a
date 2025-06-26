@@ -39,6 +39,11 @@ namespace asafov
           }
         }
 
+        if (line.find("(;)") != std::string::npos)
+        {
+          throw std::invalid_argument("Empty point coordinates");
+        }
+
         size_t space_pos = line.find(' ');
         if (space_pos == std::string::npos) continue;
 
