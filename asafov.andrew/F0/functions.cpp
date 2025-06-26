@@ -70,7 +70,7 @@ namespace
     }
 
     last_analysis_start = std::chrono::steady_clock::now();
-    
+
     auto& freq = texts[name].word_freq;
     freq.clear();
 
