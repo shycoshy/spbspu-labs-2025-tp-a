@@ -4,6 +4,29 @@
 #include <stdexcept>
 #include <iostream>
 
+namespace
+{
+  bool isPolygonValid(const asafov::Polygon& poly)
+  {
+    if (poly.points.size() < 3)
+    {
+      return false;
+    }
+
+    for (size_t i = 0; i < poly.points.size(); ++i)
+    {
+        for (size_t j = i + 1; j < poly.points.size(); ++j)
+        {
+          if (poly.points[i] == poly.points[j])
+          {
+            return false;
+          }
+        }
+    }
+    return true;
+  }
+}
+
 namespace asafov
 {
   void processCommand(const std::vector< Polygon >& polygons, const std::string& cmd)
@@ -18,11 +41,6 @@ namespace asafov
       std::cout << count << '\n';
     };
 
-    auto isValidPolygon = [](const Polygon& poly) ->bool
-    {
-      return poly.points.size() >= 3;
-    };
-
     try
     {
       if (cmd == "AREA MEAN")
@@ -35,7 +53,7 @@ namespace asafov
         size_t valid_count = 0;
         for (const auto& poly: polygons)
         {
-          if (isValidPolygon(poly))
+          if (isPolygonValid(poly))
           {
             total += computeArea(poly);
             valid_count++;
@@ -57,7 +75,7 @@ namespace asafov
         double max_area = 0;
         for (const auto& poly: polygons)
         {
-          if (isValidPolygon(poly))
+          if (isPolygonValid(poly))
           {
             double area = computeArea(poly);
             if (!found || area > max_area)
@@ -83,7 +101,7 @@ namespace asafov
         size_t max_vert = 0;
         for (const auto& poly: polygons)
         {
-          if (isValidPolygon(poly))
+          if (isPolygonValid(poly))
           {
             if (!found || poly.points.size() > max_vert)
             {
@@ -108,7 +126,7 @@ namespace asafov
         double min_area = 0;
         for (const auto& poly: polygons)
         {
-          if (isValidPolygon(poly))
+          if (isPolygonValid(poly))
           {
             double area = computeArea(poly);
             if (!found || area < min_area)
@@ -134,7 +152,7 @@ namespace asafov
         size_t min_vert = 0;
         for (const auto& poly: polygons)
         {
-          if (isValidPolygon(poly))
+          if (isPolygonValid(poly))
           {
             if (!found || poly.points.size() < min_vert)
             {
@@ -154,7 +172,7 @@ namespace asafov
         double sum = 0.0;
         for (const auto& poly: polygons)
         {
-          if (isValidPolygon(poly) && poly.points.size() % 2 == 0)
+          if (isPolygonValid(poly) && poly.points.size() % 2 == 0)
           {
             sum += computeArea(poly);
           }
@@ -166,7 +184,7 @@ namespace asafov
         double sum = 0.0;
         for (const auto& poly: polygons)
         {
-          if (isValidPolygon(poly) && poly.points.size() % 2 != 0)
+          if (isPolygonValid(poly) && poly.points.size() % 2 != 0)
           {
             sum += computeArea(poly);
           }
@@ -186,7 +204,7 @@ namespace asafov
           double sum = 0.0;
           for (const auto& poly: polygons)
           {
-            if (isValidPolygon(poly) && poly.points.size() == num)
+            if (isPolygonValid(poly) && poly.points.size() == num)
             {
               sum += computeArea(poly);
             }
@@ -203,7 +221,7 @@ namespace asafov
         size_t count = 0;
         for (const auto& poly: polygons)
         {
-          if (isValidPolygon(poly) && poly.points.size() % 2 == 0)
+          if (isPolygonValid(poly) && poly.points.size() % 2 == 0)
           {
             count++;
           }
@@ -215,7 +233,7 @@ namespace asafov
         size_t count = 0;
         for (const auto& poly: polygons)
         {
-          if (isValidPolygon(poly) && poly.points.size() % 2 != 0)
+          if (isPolygonValid(poly) && poly.points.size() % 2 != 0)
           {
             count++;
           }
@@ -235,7 +253,7 @@ namespace asafov
           size_t count = 0;
           for (const auto& poly: polygons)
           {
-            if (isValidPolygon(poly) && poly.points.size() == num)
+            if (isPolygonValid(poly) && poly.points.size() == num)
             {
               count++;
             }
