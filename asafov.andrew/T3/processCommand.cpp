@@ -172,7 +172,7 @@ namespace asafov
         double sum = 0.0;
         for (const auto& poly: polygons)
         {
-          if (isPolygonValid(poly) && poly.points.size() % 2 == 0)
+          if (isPolygonValid(poly) && poly.points.size() % 2 == 0 && poly.points.size() > 1)
           {
             sum += computeArea(poly);
           }

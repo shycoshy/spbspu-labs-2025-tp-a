@@ -11,7 +11,7 @@ namespace asafov
     return isdigit(c) || c == '(' || c == ')' || c == ';' || c == '-' || c == ' ';
   }
 
-  std::vector< Polygon > readPolygonsFromFile(const std::string& filename)
+  std::vector<Polygon> readPolygonsFromFile(const std::string& filename)
   {
     std::ifstream file(filename);
     if (!file)
@@ -19,7 +19,7 @@ namespace asafov
       throw std::runtime_error("Cannot open file");
     }
 
-    std::vector< Polygon > polygons;
+    std::vector<Polygon> polygons;
     std::string line;
 
     while (std::getline(file, line))
@@ -28,7 +28,7 @@ namespace asafov
       {
         if (line.empty()) continue;
 
-        for (char c: line)
+        for (char c : line)
         {
           if (!isValidPointChar(c) && !isspace(c))
           {
